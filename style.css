@@ -35,6 +35,9 @@ body {
     width: 350px;
     border: 3px solid black;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .secretDiv {
@@ -55,6 +58,11 @@ body {
     width: 700px;
     border: 3px solid black;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    gap: 10px;
 }
 
 .keyboard {
@@ -74,12 +82,50 @@ body {
     width: 50px;
     border: 1px solid black;
     border-radius: 20px;
+    box-shadow: 5px 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+}
+
+.divLettre {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.button {
+    height: 50px;
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px;
+    background-color: #b3433b;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#X, #C, #V, #B, #N {
-    position: relative;
-    left: 100px;
+.button:hover {
+    cursor:pointer;
+}
+
+.key:hover {
+    cursor:pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.contourOK {
+    border: 2px solid green;
+}
+
+.contourFALSE {
+    border: 2px solid red;
 }
