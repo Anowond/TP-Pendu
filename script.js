@@ -1,3 +1,4 @@
+
 /* Création des éléments */
 
 let body = document.querySelector("body")
@@ -130,9 +131,38 @@ secretDiv.appendChild(button)
 
 let essai = 0
 
+/* Définition de la requête d'API */
+
+async function getResponse() {
+
+    const options = {
+        method: 'GET',
+        url: 'https://word-generator2.p.rapidapi.com/',
+        headers: {
+            'X-RapidAPI-Key': '7653558c72msh4744c32ce35a248p148572jsn1385e9bed9b2',
+            'X-RapidAPI-Host': 'word-generator2.p.rapidapi.com'
+        }
+    };
+    try {
+        const response = await axios.request(options);
+        return response;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+/* Définition d'une variable "response" qui va accueillir la réponse de l'API */
+
+let response = await getResponse()
+
 /* Définition d'un tableau de mots */
 
-let tableauMots = ["iguane", "pécaris", "marsouin", "mangouste", "crabe", "vison", "naja", "ornithorynque", "hérisson"]
+let tableauMots = []
+
+/* Ajout du mot aléatoire choisi par l'API dans le tableau "tableauMots" */
+
+tableauMots.push(response.data.body[0])
+console.log(tableauMots)
 
 /* Définition de la fonction qui choisit un index dans le tableau de mots au hasard */
 
@@ -177,7 +207,6 @@ let paveKeyboard = ["A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "Q", "S", 
 let keyboard = document.createElement("div");
 keyboard.classList.add("keyboard");
 secretDiv.appendChild(keyboard);
-
 
 
 paveKeyboard.forEach(element => {
@@ -228,6 +257,8 @@ paveKeyboard.forEach(element => {
 
 });
 
+
+
 /* Création d'un écouteur d'événement sur le bouton pour générer un nouveau mot */
 
 button.addEventListener("click", () => {
@@ -240,8 +271,9 @@ button.addEventListener("click", () => {
 
         secretDisplay.innerHTML = "";
         motSecret = choisirMot(tableauMots)
+        console.log(motSecret)
     }
 
 })
 
-
+motSecret = choisirMot(tableauMots)
