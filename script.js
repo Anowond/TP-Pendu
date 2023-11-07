@@ -16,6 +16,20 @@ let hangedDiv = document.createElement("div")
 hangedDiv.classList.add("hangedDiv")
 container.appendChild(hangedDiv)
 
+/* DESSIN DU PENDU */
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* Création du canvas */
+
+let canvas = document.createElement("canvas")
+canvas.setAttribute("id", "canvas")
+canvas.setAttribute("height", "300px")
+canvas.setAttribute("width", "300px")
+canvas.classList.add("canvas")
+
+let ctx = canvas.getContext("2d")
+hangedDiv.appendChild(canvas)
+
 /* Définition d'un tableau contenant des tableaux répertoriant les différentes coordonnées du dessin du pendu */
 
 let pendu = [
@@ -30,10 +44,10 @@ let pendu = [
     [85, 100, 140, 50],
     //corde: 
     [200, 50, 200, 85],
-    //corps: 
-    [200, 125, 200, 200],
     //tête
     ["tete"],
+    //corps: 
+    [200, 125, 200, 200],
     //Bdroit: 
     [200, 135, 170, 155],
     //Bgauche: 
@@ -51,15 +65,15 @@ let pendu = [
 
 function dessinerTete() {
 
-    if(ctx != null) {
+    if (ctx != null) {
 
-    ctx.beginPath();
-    ctx.arc(200, 105, 20, 0, 2 * Math.PI)
-    ctx.stroke();
-    ctx.closePath();
+        ctx.beginPath();
+        ctx.arc(200, 105, 20, 0, 2 * Math.PI)
+        ctx.stroke();
+        ctx.closePath();
 
     }
-    
+
 }
 
 /* Création d'un fonction de dessin à l'intérieur du canvas, avec comme paramétres les différents tableaux de coordonnées eux-mêmes stockés dans le tableau pendu */
@@ -82,16 +96,7 @@ function dessinerPendu(tableau) {
 
 }
 
-/* Création du canvas */
-
-let canvas = document.createElement("canvas")
-canvas.setAttribute("id", "canvas")
-canvas.setAttribute("height", "300px")
-canvas.setAttribute("width", "300px")
-canvas.classList.add("canvas")
-
-let ctx = canvas.getContext("2d")
-hangedDiv.appendChild(canvas)
+/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 /* Conteneur du mot secret */
 
@@ -113,68 +118,25 @@ let touche;
 
 let motSecret;
 
-/* Création du clavier virtuel */
-
-    /* Création du tableau des touches du clavier virtuel */
-
-    let paveKeyboard = ["A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "W", "X", "C", "V", "B", "N","É","È"]
-
-     /* Création de la div des touches du clavier virtuel */
-
-     let keyboard = document.createElement("div");
-     keyboard.classList.add("keyboard");
-     secretDiv.appendChild(keyboard);
- 
-     paveKeyboard.forEach(element => {
- 
-         let key = document.createElement("div");
-         key.textContent = element;
-         key.setAttribute("id",element)
-         key.classList.add("key");
-         keyboard.appendChild(key);
- 
-         /* Création d'un écouteur d'événement pour récupérer la lettre correspondant a la touche */
- 
-         key.addEventListener("click", (e) => {
-            
-             touche = e.target.id
-             touche = touche.toLowerCase()
-            
-            if (motSecret.includes(touche)) {
-
-                divLettre.classList.remove("hidden")
-                key.classList.add("contourOK")
-
-            }  else {
-
-                key.classList.add("contourFALSE");
-                essai--
-
-            }
-
-         })
- 
-     });
-
 /* Bouton de génération d'un nouveau mot */
 
 let button = document.createElement("div")
 button.classList.add("button")
 button.textContent = "Nouveau mot !"
-button.setAttribute("id","buttonGO")
+button.setAttribute("id", "buttonGO")
 secretDiv.appendChild(button)
 
 /* Création de la variable du compteur d'essai */
 
-let essai = 11
+let essai = 0
 
 /* Définition d'un tableau de mots */
 
-let tableauMots = ["iguane","pécaris","marsouin","mangouste","crabe","vison","naja","ornithorynque","hérisson"]
+let tableauMots = ["iguane", "pécaris", "marsouin", "mangouste", "crabe", "vison", "naja", "ornithorynque", "hérisson"]
 
 /* Définition de la fonction qui choisit un index dans le tableau de mots au hasard */
 
-function choisirMot (tableau) {
+function choisirMot(tableau) {
 
     /* Définition d'une variable qui acceuillera le tableau du mot décomposé en lettres */
 
@@ -185,13 +147,13 @@ function choisirMot (tableau) {
     let random = Math.floor(Math.random() * tableau.length);
 
     /* Décomposition du contenu de l'index aléatoire choisi et ajout de ce contenu dans le tableau "tableauLettres" */
-    
+
     tableauLettres = tableau[random].split("")
 
-    /* Décomposition du tableau de lettres et affichage de chaque lettre dans une div a part dans la div parente "secretDisplay" */          
+    /* Décomposition du tableau de lettres et affichage de chaque lettre dans une div a part dans la div parente "secretDisplay" */
 
     tableauLettres.forEach(element => {
-        
+
         let divLettre = document.createElement("div")
         divLettre.classList.add("divLettre")
         divLettre.classList.add("hidden")
@@ -200,31 +162,86 @@ function choisirMot (tableau) {
 
     });
 
-    return tableauLettres, divLettre;
-    
+    return tableauLettres;
+
 }
 
-/* Décomposition du tableau des coordonnées et appel de la fonction de dessin (pour dessiner tout le pendu d'un coup) */
+/* Création du clavier virtuel */
 
-pendu.forEach(element => {
+/* Création du tableau des touches du clavier virtuel */
 
-    dessinerPendu(element)
+let paveKeyboard = ["A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "W", "X", "C", "V", "B", "N", "É", "È"]
+
+/* Création de la div des touches du clavier virtuel */
+
+let keyboard = document.createElement("div");
+keyboard.classList.add("keyboard");
+secretDiv.appendChild(keyboard);
+
+
+
+paveKeyboard.forEach(element => {
+
+    let key = document.createElement("div");
+    key.textContent = element;
+    key.setAttribute("id", element)
+    key.classList.add("key");
+    keyboard.appendChild(key);
+
+    /* Création d'un écouteur d'événement sur les touches du clavier pour récupérer leur valeur */
+
+    key.addEventListener("click", (e) => {
+
+        touche = e.target.id
+        touche = touche.toLowerCase()
+        console.log(secretDisplay)
+
+        /* Condition de corrspondance des lettres contenues dans le tableau "motSecret" */
+
+        if (motSecret.includes(touche)) {
+
+            /* Décomposition des enfants de secretDisplay pour pouvoir accéder aux divs "divlettre" */
+
+            secretDisplay.childNodes.forEach(element => {
+
+                if (element.textContent == touche) {
+
+                    /* Si il y a correspondance entre les lettres, alors on retire l'invisibilité de la div */
+
+                    element.classList.remove("hidden")
+                    key.classList.add("contourOK")
+
+                }
+
+            });
+
+        } else {
+
+            key.classList.add("contourFALSE")
+            dessinerPendu(pendu[essai])
+            essai++
+            console.log(essai)
+
+        }
+
+    })
 
 });
 
 /* Création d'un écouteur d'événement sur le bouton pour générer un nouveau mot */
 
-button.addEventListener("click",() => {
+button.addEventListener("click", () => {
 
     if (secretDisplay.innerHTML == "") {
 
         motSecret = choisirMot(tableauMots)
-
+        console.log(motSecret)
     } else {
 
-        secretDisplay.innerHTML="";
+        secretDisplay.innerHTML = "";
         motSecret = choisirMot(tableauMots)
     }
-    
+
 })
+
 

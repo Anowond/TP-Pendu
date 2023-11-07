@@ -40,6 +40,12 @@ body {
     align-items: center;
 }
 
+.canvas {
+    border: 1px inset black;
+    border-radius: 20px;
+
+}
+
 .secretDiv {
     height: 550px;
     width: 1000px;
@@ -119,7 +125,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    background-color: black;
 }
 
 .contourOK {
